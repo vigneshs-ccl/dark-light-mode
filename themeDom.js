@@ -156,8 +156,9 @@ summary.textContent = "More skills";
 const more = document.createElement("p");
 more.textContent = "React, TailwindCSS and Node.js";
 details.append(summary, more);
-
-skillsSection.append(skillsTitle, skillHtml, skillCss, skillJs, details);
+const skillHead = document.createElement("div");
+skillHead.appendChild(skillsTitle);
+skillsSection.append(skillHead, skillHtml, skillCss, skillJs, details);
 document.body.appendChild(skillsSection);
 
 // ----------- BLOG SECTION -----------
@@ -184,10 +185,8 @@ codeBlock.appendChild(code);
 
 blogArticle.append(blogHeading, blogDate, quote, codeBlock);
 
-const aside = document.createElement("aside");
-aside.innerHTML = `Tip: Learn <sup>fast</sup>, fail <sub>early</sub>, and iterate!`;
 
-blogSection.append(blogTitle, blogArticle, aside);
+blogSection.append(blogTitle, blogArticle);
 document.body.appendChild(blogSection);
 
 // ----------- TABLE SECTION -----------
@@ -233,8 +232,8 @@ const form = document.createElement("form");
 
 // Input fields
 const formElements = [
-  { label: "Name:", type: "text", required: true, maxlength: 30 },
-  { label: "Email:", type: "email", required: true },
+  { label: "Name", type: "text", required: true, maxlength: 30 },
+  { label: "Email", type: "email", required: true },
 ];
 
 formElements.forEach((el) => {
@@ -242,14 +241,19 @@ formElements.forEach((el) => {
   div.className = "form-element";
 
   const label = document.createElement("label");
-  label.textContent = el.label + " ";
+  label.innerHTML = `${el.label}: <span style="color:red">*</span> `;
 
   const input = document.createElement("input");
   input.type = el.type;
   if (el.required) input.required = true;
   if (el.maxlength) input.maxLength = el.maxlength;
 
-  div.append(label, document.createElement("br"), input);
+  const error = document.createElement("small");
+  error.className = "error";
+  error.style.color = "red";
+  error.style.display = "none";
+
+  div.append(label, document.createElement("br"), input, error);
   form.appendChild(div);
 });
 
@@ -257,19 +261,27 @@ formElements.forEach((el) => {
 const selectDiv = document.createElement("div");
 selectDiv.className = "form-element";
 selectDiv.innerHTML = `
-  <label>Choose Topic: </label><br/>
-  <select>
+  <label>Choose Topic: <span style="color:red">*</span></label><br/>
+  <select required>
+    <option value="">-- Select --</option>
     <option>General</option>
     <option>Project</option>
     <option>Collaboration</option>
   </select>
+  <small class="error" style="color:red; display:none;"></small>
 `;
 form.appendChild(selectDiv);
 
 // Newsletter
 const newsDiv = document.createElement("div");
 newsDiv.className = "form-element";
-newsDiv.innerHTML = `<label>Newsletter: <input type="checkbox"/> Subscribe</label>`;
+newsDiv.innerHTML = `
+  <label>Newsletter: <span style="color:red">*</span> 
+    <input type="checkbox" required/> Subscribe
+  </label>
+  <br/>
+  <small class="error" style="color:red; display:none;"></small>
+`;
 form.appendChild(newsDiv);
 
 // Submit
@@ -280,6 +292,63 @@ form.appendChild(button);
 
 contactSection.append(contactTitle, form);
 document.body.appendChild(contactSection);
+
+// -------- Validation Handling --------
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // stop for validation
+  let valid = true;
+
+  // clear all errors first
+  form.querySelectorAll(".error").forEach((el) => {
+    el.style.display = "none";
+    el.textContent = "";
+  });
+
+  // Name
+  const nameInput = form.querySelector('input[type="text"]');
+  const nameError = nameInput.nextElementSibling;
+  if (!nameInput.value.trim()) {
+    nameError.textContent = "Name is required";
+    nameError.style.display = "block";
+    valid = false;
+  }
+
+  // Email
+  const emailInput = form.querySelector('input[type="email"]');
+  const emailError = emailInput.nextElementSibling;
+  if (!emailInput.value.trim()) {
+    emailError.textContent = "Email is required";
+    emailError.style.display = "block";
+    valid = false;
+  } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailInput.value)) {
+    emailError.textContent = "Enter a valid email";
+    emailError.style.display = "block";
+    valid = false;
+  }
+
+  // Select
+  const select = form.querySelector("select");
+  const selectError = select.nextElementSibling;
+  if (!select.value) {
+    selectError.textContent = "Please choose a topic";
+    selectError.style.display = "block";
+    valid = false;
+  }
+
+  // Newsletter
+  const checkbox = form.querySelector('input[type="checkbox"]');
+  const checkboxError = checkbox.closest("div").querySelector(".error");
+  if (!checkbox.checked) {
+    checkboxError.textContent = "You must subscribe to proceed";
+    checkboxError.style.display = "block";
+    valid = false;
+  }
+
+  if (valid) {
+    alert("Form submitted successfully ");
+    form.reset();
+  }
+});
 
 // ----------- FOOTER -----------
 const footer = document.createElement("footer");

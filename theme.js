@@ -2,7 +2,8 @@
 
 const body = document.body;
 const toggleBtn = document.getElementById("theme-toggle");
-// apply theme funct
+
+// apply theme function
 function applyTheme(theme) {
   body.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
@@ -50,7 +51,6 @@ toggleBtn.addEventListener("change", function () {
 document.body.addEventListener("dblclick", function () {
   const target = event.target;
 
-  
   if (
     target.tagName === "INPUT" ||
     target.tagName === "TEXTAREA" ||
@@ -71,18 +71,19 @@ document.addEventListener("keydown", function (event) {
   if (
     active.tagName === "INPUT" ||
     active.tagName === "TEXTAREA" ||
-    active.tagName === "SELECT" ||
-    active.tagName === "CHECKBOX"
+    active.tagName === "SELECT"
   ) {
     return;
   }
-  if (event.key === "d" || event.key === "D") {
-    const currentTheme = body.getAttribute("data-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    applyTheme(newTheme);
-  } else if (event.key === "l" || event.key === "L") {
+  if (
+    event.key === "d" ||
+    event.key === "D" ||
+    event.key === "l" ||
+    event.key === "L"
+  ) {
     const currentTheme = body.getAttribute("data-theme");
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     applyTheme(newTheme);
   }
 });
+

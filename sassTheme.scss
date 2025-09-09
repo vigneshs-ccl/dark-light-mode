@@ -282,7 +282,7 @@ form {
     border: none;
     font-weight: 600;
     cursor: pointer;
-    width: 25%;
+    width: 15%;
     text-align: center;
     transition: background $transition;
 
@@ -319,32 +319,152 @@ footer {
 }
 
 @media (min-width: 992px) {
+  body {
+    max-width: 1500px; // limit content width
+    margin: 0 auto;
+    padding: map-get($spacing, xl); // add breathing room
+  }
+
+  // Headings - consistent alignment
+  section h2 {
+    text-align: center;
+    font-size: map-get($font-sizes, xxl);
+    margin-bottom: map-get($spacing, xl);
+    color: var(--primary-color);
+  }
+
+  header {
+    padding: map-get($spacing, lg) map-get($spacing, xxl);
+  }
+
+  nav ul {
+    gap: map-get($spacing, xxl);
+    font-size: map-get($font-sizes, lg);
+  }
+
+  // About Section
   #about {
     display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: map-get($spacing, xl);
+    padding: map-get($spacing, xxl);
+    text-align: left;
     flex-direction: column;
-    width: 100%;
   }
 
   .containerWrapper {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    width: 70%;
-    row-gap: map-get($spacing, lg);
-    margin: map-get($spacing, md) auto;
-    flex-wrap: wrap;
+    gap: map-get($spacing, xl);
+    width: 100%;
   }
 
-  .about-article p {
-    font-size: map-get($font-sizes, lg);
+  .about-article {
+    flex: 3;
+    p {
+      font-size: map-get($font-sizes, lg);
+      margin-bottom: map-get($spacing, sm);
+      line-height: 1.8;
+    }
   }
 
   .image-container {
     flex: 2;
-    margin-right: map-get($spacing, lg);
-
+    display: flex;
+    justify-content: center;
     img {
-      width: 400px;
+      width: 380px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
+  }
+
+  // Project Section
+  .project-container {
+    display: flex;
+    justify-content: center;
+    gap: map-get($spacing, xxl);
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  figure,
+  .video-section {
+    flex: 1;
+    min-width: 350px;
+    text-align: center;
+  }
+
+  // Skills Section (flex instead of grid)
+  #skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map-get($spacing, xl);
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+
+  }
+
+  // Skills Section
+ #skills > div {
+    flex: 1 1 45%; // two columns
+    min-width: 300px;
+    max-width: 600px;
+  }
+
+  #skills p {
+    width: 80%;
+  }
+
+  details {
+    flex: 1 1 100%; // span full width
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  // Blog Section (flex instead of grid)
+  #blog {
+    display: flex;
+    gap: map-get($spacing, lg);
+    align-items: center;
+    flex-direction: column;
+
+    article {
+      width: 60%;
+      background: var(--glass-bg-color);
+      padding: map-get($spacing, lg);
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    aside {
+
+      background: var(--gray-100-color);
+      padding: map-get($spacing, lg);
+      border-radius: 12px;
+      font-size: map-get($font-sizes, base);
+      line-height: 1.8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // Contact Section
+  form {
+    width: 60%;
+    padding: map-get($spacing, xl);
+    background: var(--gray-100-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  // Table Section
+  #schedule table {
+    width: 80%;
+    margin: 0 auto;
+    font-size: map-get($font-sizes, lg);
   }
 }
 
