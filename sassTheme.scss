@@ -1,0 +1,350 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+
+// -------------------- BASE VARIABLES --------------------
+$font-family: "Montserrat", sans-serif;
+
+// font sizes
+$font-sizes: (
+  sm: 0.9rem,
+  base: 1rem,
+  lg: 1.2rem,
+  xl: 1.6rem,
+  xxl: 2rem
+);
+
+// spacing (px)
+$spacing: (
+  xs: 5px,
+  sm: 10px,
+  md: 15px,
+  lg: 20px,
+  xl: 30px,
+  xxl: 40px
+);
+
+// transitions
+$transition: 0.3s ease;
+$transition-slow: 0.4s;
+
+// light theme
+$light-theme: (
+  bg: #ffffff,
+  text: #1f2937,
+  primary: #2563eb,
+  secondary: #9333ea,
+  accent: #f59e0b,
+  gray-100: #f3f4f6,
+  gray-300: #d1d5db,
+  gray-900: #111827,
+  glass-bg: rgba(255, 255, 255, 0.65),
+  glass-border: rgba(0, 0, 0, 0.1)
+);
+
+// dark theme
+$dark-theme: (
+  bg: #0f172a,
+  text: #f9fafb,
+  primary: #3b82f6,
+  secondary: #a855f7,
+  accent: #fbbf24,
+  gray-100: #1f2937,
+  gray-300: #374151,
+  gray-900: #f9fafb,
+  glass-bg: rgba(18, 18, 18, 0.55),
+  glass-border: rgba(255, 255, 255, 0.1)
+);
+
+// -------------------- Theme Handler --------------------
+:root {
+  @each $key, $val in $light-theme {
+    --#{$key}-color: #{$val};
+  }
+}
+
+[data-theme="dark"] {
+  @each $key, $val in $dark-theme {
+    --#{$key}-color: #{$val};
+  }
+}
+
+// -------------------- Global Reset --------------------
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color $transition-slow, color $transition-slow;
+  padding: map-get($spacing, lg);
+  line-height: 1.7;
+}
+
+// -------------------- HEADER --------------------
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--glass-bg-color);
+  border: 1px solid var(--glass-border-color);
+  border-radius: 16px;
+  padding: map-get($spacing, md) map-get($spacing, lg);
+  margin-bottom: map-get($spacing, xl);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+// -------------------- NAVBAR --------------------
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: map-get($spacing, lg);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  transition: color $transition;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+// -------------------- THEME TOGGLE --------------------
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: var(--text-color);
+  width: 60px;
+  height: 36px;
+  border-radius: 50px;
+  position: relative;
+  padding: map-get($spacing, xs);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .ball {
+    background-color: var(--bg-color);
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s linear;
+  }
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
+}
+
+.fa-moon {
+  color: #f1c40f;
+}
+.fa-sun {
+  color: #f39c12;
+}
+
+// -------------------- SECTIONS --------------------
+section {
+  margin-bottom: map-get($spacing, xxl);
+  padding: map-get($spacing, lg);
+  border-radius: 12px;
+  background: var(--glass-bg-color);
+  border: 1px solid var(--glass-border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    margin-bottom: map-get($spacing, md);
+    font-size: map-get($font-sizes, xl);
+    color: var(--primary-color);
+  }
+}
+
+// -------------------- PROJECTS --------------------
+.project-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+figure {
+  margin: map-get($spacing, lg) 0;
+  text-align: center;
+
+  img {
+    border-radius: 12px;
+    max-width: 100%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  figcaption {
+    margin-top: map-get($spacing, xs);
+    font-style: italic;
+    font-size: map-get($font-sizes, sm);
+  }
+}
+
+// -------------------- SKILLS --------------------
+progress,
+meter {
+  width: 100%;
+  height: 16px;
+  margin: map-get($spacing, xs) 0 map-get($spacing, md);
+}
+
+details {
+  margin-top: map-get($spacing, sm);
+  padding: map-get($spacing, sm);
+  border-radius: 8px;
+  background: var(--gray-100-color);
+}
+
+// -------------------- BLOG --------------------
+blockquote {
+  margin: map-get($spacing, sm) 0;
+  padding-left: map-get($spacing, md);
+  border-left: 4px solid var(--accent-color);
+  font-style: italic;
+  color: var(--secondary-color);
+}
+
+pre {
+  background: var(--gray-100-color);
+  padding: map-get($spacing, sm);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+// -------------------- TABLE --------------------
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: map-get($spacing, md);
+
+  th,
+  td {
+    border: 1px solid var(--gray-300-color);
+    padding: map-get($spacing, sm);
+    text-align: left;
+  }
+
+  thead {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  tfoot {
+    font-style: italic;
+    background: var(--gray-100-color);
+  }
+}
+
+// -------------------- FORM --------------------
+#contact h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($spacing, xxl);
+  align-items: center;
+  justify-content: center;
+  margin: map-get($spacing, sm) auto;
+
+  input,
+  textarea,
+  select,
+  button {
+    padding: map-get($spacing, xs) map-get($spacing, md);
+    border-radius: 8px;
+    border: 1px solid var(--gray-300-color);
+    font-size: map-get($font-sizes, base);
+  }
+
+  button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    width: 25%;
+    text-align: center;
+    transition: background $transition;
+
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+}
+
+// -------------------- FOOTER --------------------
+footer {
+  text-align: center;
+  margin-top: map-get($spacing, xxl);
+  padding: map-get($spacing, lg);
+  font-size: map-get($font-sizes, sm);
+  background: var(--glass-bg-color);
+  border: 1px solid var(--glass-border-color);
+  border-radius: 12px;
+}
+
+// -------------------- MEDIA QUERIES --------------------
+@media (max-width: 992px) {
+  header {
+    flex-direction: column;
+    gap: map-get($spacing, sm);
+  }
+
+  #about,
+  #skills,
+  #blog,
+  #schedule {
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+  #about {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .containerWrapper {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    row-gap: map-get($spacing, lg);
+    margin: map-get($spacing, md) auto;
+    flex-wrap: wrap;
+  }
+
+  .about-article p {
+    font-size: map-get($font-sizes, lg);
+  }
+
+  .image-container {
+    flex: 2;
+    margin-right: map-get($spacing, lg);
+
+    img {
+      width: 400px;
+    }
+  }
+}
+

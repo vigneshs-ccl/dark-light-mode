@@ -1,0 +1,22 @@
+# Operating System Files
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
+
+# Editor/IDE specific files
+.vscode/ # VS Code specific settings
+*.sublime-project
+*.sublime-workspace
+.idea/ # IntelliJ/WebStorm specific
+
+# Node.js dependencies (if using npm/yarn)
+node_modules/
+
+# Build artifacts (if using build tools like Webpack, Gulp, Parcel)
+dist/
+build/
+.cache/
+
+# Temporary files
+*.log
+*.tmp
+*.bak
