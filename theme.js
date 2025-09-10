@@ -17,7 +17,7 @@ function applyTheme(theme) {
     if (theme === "light") {
       navigator.vibrate(50);
     } else {
-      navigator.vibrate([100, 50, 100]);
+      navigator.vibrate([100, 50, 100,200]);
     }
   }
 }
@@ -37,7 +37,7 @@ if (savedTheme) {
 // Update theme automatically if system preference changes
 prefersDark.addEventListener("change", (event) => {
   if (!localStorage.getItem("theme")) {
-    // Only if user hasn't chosen manually
+ 
     applyTheme(event.matches ? "dark" : "light");
   }
 });
@@ -56,7 +56,7 @@ document.body.addEventListener("dblclick", function () {
     target.tagName === "TEXTAREA" ||
     target.tagName === "SELECT" ||
     target.closest("label") ||
-    target.tagName === "BUTTON"
+    target.tagName === "BUTTON" 
   ) {
     return;
   }

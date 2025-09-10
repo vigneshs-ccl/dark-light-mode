@@ -96,6 +96,7 @@ header {
   margin-bottom: map-get($spacing, xl);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 // -------------------- NAVBAR --------------------
@@ -114,6 +115,44 @@ nav a {
   &:hover {
     color: var(--primary-color);
   }
+}
+
+// THEME
+.theme-container {
+  margin-left: 1rem;
+}
+
+// ---------------- MOBILE ----------------
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 6px;
+  span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background: var(--text-color);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+// Hamburger Animation
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+// NAV SLIDE-IN
+nav {
+  right: -260px;          // hidden by default
+  transition: right 0.4s ease-in-out;
 }
 
 // -------------------- THEME TOGGLE --------------------
@@ -195,6 +234,27 @@ figure {
     margin-top: map-get($spacing, xs);
     font-style: italic;
     font-size: map-get($font-sizes, sm);
+  }
+}
+
+.video-section {
+  width: 100%;
+  max-width: 600px; 
+  margin: 30px 0px 0px auto;
+
+  iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; 
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  figcaption {
+    margin-top: map-get($spacing, xs);
+    font-size: map-get($font-sizes, sm);
+    font-style: italic;
+    text-align: center;
   }
 }
 
@@ -305,10 +365,79 @@ footer {
 
 // -------------------- MEDIA QUERIES --------------------
 @media (max-width: 992px) {
-  header {
+    nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    background: var(--glass-bg-color);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.25);
+    padding: 5rem 2rem 2rem;
+    display: flex;
     flex-direction: column;
-    gap: map-get($spacing, sm);
+    align-items: center;
+    gap: 2rem;
+    transition: right 0.4s ease;
+    z-index: 1001;
+
+    //  hide initially
+    display: none;
+    transform: translateX(100%);
+    
+    .theme-container{
+      margin-left: 0px;
+    }
   }
+
+  nav.active {
+     display: flex;                
+    transform: translateX(0);       
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+
+    // Hamburger
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1100;
+    text-align: center;
+
+    span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: var(--text-color);
+      border-radius: 3px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+     width: 100%;
+  }
+
 
   #about,
   #skills,
@@ -316,9 +445,23 @@ footer {
   #schedule {
     text-align: center;
   }
+
+  .image-container{
+    img{
+      width: 100%;
+    }
+  }
+
+  form{
+    button{
+      width:25%;
+    }
+  }
+
 }
 
 @media (min-width: 992px) {
+
   body {
     max-width: 1500px; // limit content width
     margin: 0 auto;
@@ -335,6 +478,27 @@ footer {
 
   header {
     padding: map-get($spacing, lg) map-get($spacing, xxl);
+  }
+  
+  .theme-container {
+    margin-left: 1rem; // keep inline in desktop nav
+  }
+
+  .hamburger {
+    display: none;
+  }
+  nav {
+    position: static;
+    height: auto;
+    width: auto;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+  }
+  nav ul {
+    flex-direction: row;
+    margin-right: 10px;
   }
 
   nav ul {
@@ -374,8 +538,9 @@ footer {
     flex: 2;
     display: flex;
     justify-content: center;
+    width:100%;
     img {
-      width: 380px;
+      width: 100%;
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }

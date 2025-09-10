@@ -1,14 +1,15 @@
 // header section.
 const header = document.createElement("header");
 
+// Title
 const h1 = document.createElement("h1");
-
 const abbreviation = document.createElement("abbr");
 abbreviation.title = "HyperText Markup Language";
-abbreviation.innerText = "My Portfolio";
+abbreviation.innerText = "Portfolio";
 h1.appendChild(abbreviation);
 
 // navigation
+
 const nav = document.createElement("nav");
 const unorderedList = document.createElement("ul");
 
@@ -33,6 +34,7 @@ for (let item of menuItems) {
 
 nav.appendChild(unorderedList);
 
+// THEME TOGGLE
 const themeContainer = document.createElement("div");
 themeContainer.className = "theme-container";
 
@@ -51,9 +53,23 @@ themeSpan.className = "ball";
 themeLabel.appendChild(themeSpan);
 themeContainer.append(themeInput, themeLabel);
 
-header.append(h1, nav, themeContainer);
+// HAMBURGER MENU BUTTON
+const hamburger = document.createElement("div");
+hamburger.className = "hamburger";
+hamburger.innerHTML = `<span></span><span></span><span></span>`;
 
+nav.appendChild(themeContainer);
+header.append(h1,hamburger,nav);
 document.body.appendChild(header);
+
+// ----------------- INTERACTIONS ----------------- //
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  nav.classList.toggle("active");
+  overlay.classList.toggle("active");
+});
+
 
 // ----------- ABOUT SECTION -----------
 const aboutSection = document.createElement("section");
@@ -64,7 +80,7 @@ imageContainer.className = "image-container";
 const myImage = document.createElement("img");
 
 myImage.src = "./assets/myself.png";
-myImage.width = "300";
+
 imageContainer.append(myImage);
 
 const aboutTitle = document.createElement("h2");
@@ -73,7 +89,7 @@ aboutTitle.textContent = "About Me";
 const aboutArticle = document.createElement("article");
 aboutArticle.className = "about-article"
 const p1 = document.createElement("p");
-p1.innerHTML = `Hello! I am <mark>Vignesh</mark>, a web developer passionate about building scalable apps.`;
+p1.innerHTML = `Hello! I am <mark> Vignesh Kumar</mark>, a web developer passionate about building scalable apps.`;
 
 const p2 = document.createElement("p");
 p2.innerHTML = `I started coding in <time datetime="2020">2020</time>. I love <em>JavaScript</em>, <strong>React</strong>, and <u>Node.js</u>.`;
@@ -101,9 +117,9 @@ figure.title = "Gallery application github repo";
 figure.style.cursor = "pointer";
 const img = document.createElement("img");
 img.src =
-  "https://play-lh.googleusercontent.com/qjXTcCAhQxf2ifPgfsdooK74zjSZdegs5FrMhrG1zIyg9IL4RSmQG3jNfjkZ-MqFhUMX";
+  "./assets/gallery-application.png";
 img.alt = "Gallery application";
-img.width = 215;
+// img.width = 305;
 
 img.addEventListener("click", function () {
   document.location = "https://github.com/vigneshs-ccl/Gallery_app";
@@ -117,8 +133,6 @@ const videoDiv = document.createElement("div");
 videoDiv.className = "video-section";
 
 const iframe = document.createElement("iframe");
-iframe.width = "400";
-iframe.height = "215";
 iframe.src = "https://www.youtube.com/embed/Vc6SFpPf-V4?si=M2U6GDwwOHjqfhzZ";
 iframe.title = "YouTube video player";
 iframe.frameBorder = "0";
